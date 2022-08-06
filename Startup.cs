@@ -21,6 +21,7 @@ namespace react_dotnet_example
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddCors();
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
@@ -45,6 +46,11 @@ namespace react_dotnet_example
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
